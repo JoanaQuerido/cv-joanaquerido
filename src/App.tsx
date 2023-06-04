@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss'
+import { Routes, Route } from 'react-router-dom'
+import Homepage from './pages/Homepage'
+import Contactpage from './pages/Contactpage'
+
+import Header from './components/Header/Header'
+
+import Footer from './components/Footer/Footer'
+import { ThemeProvider, useTheme } from './components/Theme/ThemeContext'
+import ParticlesComponent from './components/Theme/Particles'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider>
+      <ParticlesComponent />
+      <AppContent />
+    </ThemeProvider>
+  )
 }
 
-export default App;
+function AppContent() {
+  const { theme } = useTheme()
+
+  return (
+    <div id={theme}>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/contact" element={<Contactpage />} />
+      </Routes>
+      <Footer />
+    </div>
+  )
+}
+
+export default App
